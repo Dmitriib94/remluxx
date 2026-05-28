@@ -515,79 +515,297 @@
       </div>
     </section>
 
-   <section id="portfolio" class="section section--light">
+    <section id="portfolio" class="section section--light" aria-labelledby="portfolio-title">
       <div class="container">
         <div class="portfolio__head">
-          <h2 class="portfolio__title">Фото наших работ</h2>
-
-          <div class="portfolio__filters" data-portfolio-filters role="tablist" aria-label="Фильтры портфолио">
-            <button class="portfolio__filter is-active" type="button" data-filter="all" aria-pressed="true">Все</button>
-            <button class="portfolio__filter" type="button" data-filter="apartments" aria-pressed="false">Квартиры</button>
-            <button class="portfolio__filter" type="button" data-filter="houses" aria-pressed="false">Дома</button>
-            <button class="portfolio__filter" type="button" data-filter="cosmetic" aria-pressed="false">Косметический</button>
-            <button class="portfolio__filter" type="button" data-filter="capital" aria-pressed="false">Капитальный</button>
-            <button class="portfolio__filter" type="button" data-filter="design" aria-pressed="false">Дизайнерский</button>
+          <div>
+            <h2 id="portfolio-title" class="portfolio__title">Фото наших работ</h2>
           </div>
         </div>
 
-        <div class="portfolio__grid" data-portfolio-grid>
-          <article class="portfolio-card" data-category="apartments capital">
-            <div class="portfolio-card__slider" data-before-after>
-              <div class="portfolio-card__image--before">
-                <img src="img/portfolio/portfolio-1-before.jpg" alt="Квартира до ремонта" loading="lazy">
+        <div class="portfolio__sections">
+          <!-- Слайдер 1 -->
+          <section class="portfolio-group">
+            <div class="portfolio-group__head">
+              <div class="portfolio-group__title-wrap">
+                <h3 class="portfolio-group__title">Новостройки</h3>
+                <p class="portfolio-group__meta">Ремонт квартир в современных ЖК</p>
               </div>
 
-              <div class="portfolio-card__image--after" data-after-image>
-                <img src="img/portfolio/portfolio-1-after.jpg" alt="Квартира после ремонта" loading="lazy">
-              </div>
+              <div class="portfolio-group__controls">
+                <div class="slider__pagination" data-slider-pagination></div>
 
-              <div class="portfolio-card__overlay"></div>
+                <div class="slider__controls">
+                  <button class="slider__nav" type="button" data-slider-prev aria-label="Предыдущий слайд">
+                    <svg class="icon icon--stroke" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M15 6L9 12L15 18"></path>
+                    </svg>
+                  </button>
 
-              <span class="portfolio-card__label portfolio-card__label--before">До</span>
-              <span class="portfolio-card__label portfolio-card__label--after">После</span>
-
-              <div class="portfolio-card__divider" data-divider>
-                <span class="portfolio-card__divider-line"></span>
-                <span class="portfolio-card__handle" aria-hidden="true">
-                  <svg class="icon icon--stroke" viewBox="0 0 24 24">
-                    <path d="M8 7L3 12L8 17"></path>
-                    <path d="M16 7L21 12L16 17"></path>
-                  </svg>
-                </span>
-              </div>
-
-              <div class="portfolio-card__content">
-                <div class="portfolio-card__tag">Капитальный ремонт</div>
-                <h3 class="portfolio-card__title">Квартира 82 м² · Хамовники</h3>
-                <div class="portfolio-card__meta">82 м² · 94 дня</div>
-                <span class="portfolio-card__case-btn">
-                  Смотреть кейс
-                  <svg class="icon icon--stroke" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M5 12H19"></path>
-                    <path d="M13 6L19 12L13 18"></path>
-                  </svg>
-                </span>
+                  <button class="slider__nav" type="button" data-slider-next aria-label="Следующий слайд">
+                    <svg class="icon icon--stroke" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M9 6L15 12L9 18"></path>
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
-          </article>
 
-          <article class="portfolio-card" data-category="apartments cosmetic"></article>
-          <article class="portfolio-card" data-category="houses design"></article>
-          <article class="portfolio-card" data-category="houses capital"></article>
-          <article class="portfolio-card" data-category="apartments design"></article>
-          <article class="portfolio-card" data-category="houses cosmetic"></article>
+            <div class="portfolio-group__slider slider" data-slider>
+              <div class="slider__viewport" data-slider-viewport>
+                <div class="slider__track" data-slider-track>
+                  <article
+                    class="slider__slide portfolio-card"
+                    data-slider-slide
+                    data-area="82 м²"
+                    data-term="94 дня"
+                    data-budget="2 850 000 ₽"
+                    data-description="Квартира в новостройке сдавалась без отделки. Выполнили полный цикл черновых и чистовых работ, собрали инженерные системы, реализовали современный интерьер без отклонений от проекта."
+                  >
+                    <div class="portfolio-card__slider" data-before-after>
+                      <div class="portfolio-card__image--before">
+                        <img src="img/portfolio/new-1-before.webp" alt="Новостройка до ремонта" loading="lazy">
+                      </div>
+
+                      <div class="portfolio-card__image--after" data-after-image>
+                        <img src="img/portfolio/new-1-after.webp" alt="Новостройка после ремонта" loading="lazy">
+                      </div>
+
+                      <div class="portfolio-card__overlay"></div>
+
+                      <span class="portfolio-card__label portfolio-card__label--before">До</span>
+                      <span class="portfolio-card__label portfolio-card__label--after">После</span>
+
+                      <div class="portfolio-card__divider" data-divider>
+                        <span class="portfolio-card__divider-line"></span>
+                        <span class="portfolio-card__handle" aria-hidden="true">
+                          <svg class="icon icon--stroke" viewBox="0 0 24 24">
+                            <path d="M8 7L3 12L8 17"></path>
+                            <path d="M16 7L21 12L16 17"></path>
+                          </svg>
+                        </span>
+                      </div>
+
+                      <div class="portfolio-card__content">
+                        <div class="portfolio-card__tag">Новостройка</div>
+                        <h3 class="portfolio-card__title">ЖК “Символ” · 82 м²</h3>
+                        <div class="portfolio-card__meta">82 м² · 94 дня</div>
+                        <span class="portfolio-card__case-btn">
+                          Смотреть кейс
+                          <svg class="icon icon--stroke" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M5 12H19"></path>
+                            <path d="M13 6L19 12L13 18"></path>
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                  </article>
+
+                  <article class="slider__slide portfolio-card" data-slider-slide></article>
+                  <article class="slider__slide portfolio-card" data-slider-slide></article>
+                  <article class="slider__slide portfolio-card" data-slider-slide></article>
+                </div>
+              </div>
+
+              <div class="slider__scrollbar" aria-hidden="true">
+                <span class="slider__scrollbar-thumb" data-slider-scrollbar-thumb></span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Слайдер 2 -->
+          <section class="portfolio-group">
+            <div class="portfolio-group__head">
+              <div class="portfolio-group__title-wrap">
+                <h3 class="portfolio-group__title">Старый фонд</h3>
+                <p class="portfolio-group__meta">Квартиры с перепланировкой и полной заменой инженерии</p>
+              </div>
+
+              <div class="portfolio-group__controls">
+                <div class="slider__pagination" data-slider-pagination></div>
+
+                <div class="slider__controls">
+                  <button class="slider__nav" type="button" data-slider-prev aria-label="Предыдущий слайд">
+                    <svg class="icon icon--stroke" viewBox="0 0 24 24"><path d="M15 6L9 12L15 18"></path></svg>
+                  </button>
+                  <button class="slider__nav" type="button" data-slider-next aria-label="Следующий слайд">
+                    <svg class="icon icon--stroke" viewBox="0 0 24 24"><path d="M9 6L15 12L9 18"></path></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="portfolio-group__slider slider" data-slider>
+              <div class="slider__viewport" data-slider-viewport>
+                <div class="slider__track" data-slider-track>
+                  <article class="slider__slide portfolio-card" data-slider-slide></article>
+                  <article class="slider__slide portfolio-card" data-slider-slide></article>
+                  <article class="slider__slide portfolio-card" data-slider-slide></article>
+                </div>
+              </div>
+
+              <div class="slider__scrollbar" aria-hidden="true">
+                <span class="slider__scrollbar-thumb" data-slider-scrollbar-thumb></span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Слайдер 3 -->
+          <section class="portfolio-group">
+            <div class="portfolio-group__head">
+              <div class="portfolio-group__title-wrap">
+                <h3 class="portfolio-group__title">Частные дома</h3>
+                <p class="portfolio-group__meta">Комплексная отделка и инженерия загородных объектов</p>
+              </div>
+
+              <div class="portfolio-group__controls">
+                <div class="slider__pagination" data-slider-pagination></div>
+
+                <div class="slider__controls">
+                  <button class="slider__nav" type="button" data-slider-prev aria-label="Предыдущий слайд">
+                    <svg class="icon icon--stroke" viewBox="0 0 24 24"><path d="M15 6L9 12L15 18"></path></svg>
+                  </button>
+                  <button class="slider__nav" type="button" data-slider-next aria-label="Следующий слайд">
+                    <svg class="icon icon--stroke" viewBox="0 0 24 24"><path d="M9 6L15 12L9 18"></path></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="portfolio-group__slider slider" data-slider>
+              <div class="slider__viewport" data-slider-viewport>
+                <div class="slider__track" data-slider-track>
+                  <article class="slider__slide portfolio-card" data-slider-slide></article>
+                  <article class="slider__slide portfolio-card" data-slider-slide></article>
+                  <article class="slider__slide portfolio-card" data-slider-slide></article>
+                </div>
+              </div>
+
+              <div class="slider__scrollbar" aria-hidden="true">
+                <span class="slider__scrollbar-thumb" data-slider-scrollbar-thumb></span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Слайдер 4 -->
+          <section class="portfolio-group">
+            <div class="portfolio-group__head">
+              <div class="portfolio-group__title-wrap">
+                <h3 class="portfolio-group__title">Проектирование</h3>
+                <p class="portfolio-group__meta">Планировки, рабочая документация, визуализации</p>
+              </div>
+
+              <div class="portfolio-group__controls">
+                <div class="slider__pagination" data-slider-pagination></div>
+
+                <div class="slider__controls">
+                  <button class="slider__nav" type="button" data-slider-prev aria-label="Предыдущий слайд">
+                    <svg class="icon icon--stroke" viewBox="0 0 24 24"><path d="M15 6L9 12L15 18"></path></svg>
+                  </button>
+                  <button class="slider__nav" type="button" data-slider-next aria-label="Следующий слайд">
+                    <svg class="icon icon--stroke" viewBox="0 0 24 24"><path d="M9 6L15 12L9 18"></path></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="portfolio-group__slider slider" data-slider>
+              <div class="slider__viewport" data-slider-viewport>
+                <div class="slider__track" data-slider-track>
+                  <article class="slider__slide portfolio-card" data-slider-slide></article>
+                  <article class="slider__slide portfolio-card" data-slider-slide></article>
+                  <article class="slider__slide portfolio-card" data-slider-slide></article>
+                </div>
+              </div>
+
+              <div class="slider__scrollbar" aria-hidden="true">
+                <span class="slider__scrollbar-thumb" data-slider-scrollbar-thumb></span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Слайдер 5 -->
+          <section class="portfolio-group">
+            <div class="portfolio-group__head">
+              <div class="portfolio-group__title-wrap">
+                <h3 class="portfolio-group__title">Видео-отчёты</h3>
+                <p class="portfolio-group__meta">Короткие видео с реализованных объектов</p>
+              </div>
+
+              <div class="portfolio-group__controls">
+                <div class="slider__pagination" data-slider-pagination></div>
+
+                <div class="slider__controls">
+                  <button class="slider__nav" type="button" data-slider-prev aria-label="Предыдущий слайд">
+                    <svg class="icon icon--stroke" viewBox="0 0 24 24"><path d="M15 6L9 12L15 18"></path></svg>
+                  </button>
+                  <button class="slider__nav" type="button" data-slider-next aria-label="Следующий слайд">
+                    <svg class="icon icon--stroke" viewBox="0 0 24 24"><path d="M9 6L15 12L9 18"></path></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="portfolio-group__slider slider" data-slider>
+              <div class="slider__viewport" data-slider-viewport>
+                <div class="slider__track" data-slider-track>
+                  <article
+                    class="slider__slide portfolio-card portfolio-card--video"
+                    data-slider-slide
+                    data-area="Видео-обзор"
+                    data-term="4 мин"
+                    data-budget="—"
+                    data-description="Видео-отчёт с завершённого объекта: обзор планировки, материалов, инженерии и реализованных решений."
+                  >
+                    <div class="portfolio-card__slider">
+                      <div class="portfolio-card__video-poster">
+                        <img src="img/portfolio/video-1-poster.webp" alt="Видео-отчёт с объекта" loading="lazy">
+                      </div>
+
+                      <div class="portfolio-card__overlay"></div>
+
+                      <span class="portfolio-card__play" aria-hidden="true">
+                        <svg class="icon icon--fill" viewBox="0 0 24 24">
+                          <path d="M8 6.5v11l9-5.5-9-5.5z"></path>
+                        </svg>
+                      </span>
+
+                      <div class="portfolio-card__content">
+                        <div class="portfolio-card__tag">Видео-отчёт</div>
+                        <h3 class="portfolio-card__title">Объект в Хамовниках</h3>
+                        <div class="portfolio-card__meta">4 минуты · финальный обзор</div>
+                        <span class="portfolio-card__case-btn">
+                          Смотреть кейс
+                          <svg class="icon icon--stroke" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M5 12H19"></path>
+                            <path d="M13 6L19 12L13 18"></path>
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                  </article>
+
+                  <article class="slider__slide portfolio-card portfolio-card--video" data-slider-slide></article>
+                  <article class="slider__slide portfolio-card portfolio-card--video" data-slider-slide></article>
+                </div>
+              </div>
+
+              <div class="slider__scrollbar" aria-hidden="true">
+                <span class="slider__scrollbar-thumb" data-slider-scrollbar-thumb></span>
+              </div>
+            </div>
+          </section>
         </div>
 
-        <div class="portfolio__empty" data-portfolio-empty>
-          По выбранному фильтру пока нет работ.
-        </div>
+        <div class="portfolio__footer">
+          <p class="portfolio__note">
+            За 29 лет мы реализовали больше 1 000 объектов. Всегда держим связь со старыми клиентами — можем организовать выезд на завершённый объект в вашем районе.
+          </p>
 
-        <p class="portfolio__note">
-          За 29 лет мы реализовали больше 1 000 объектов. Всегда держим связь со старыми клиентами — можем организовать выезд на завершённый объект в вашем районе.
-        </p>
-
-        <div class="portfolio__actions">
-          <a href="#lead" class="btn btn--primary">Рассчитать мой проект</a>
+          <div class="portfolio__actions">
+            <a href="/portfolio/" class="btn btn--secondary">Смотреть все работы</a>
+            <a href="#lead" class="btn btn--primary">Рассчитать мой проект</a>
+          </div>
         </div>
       </div>
     </section>

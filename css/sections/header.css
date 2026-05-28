@@ -31,6 +31,24 @@
   gap: var(--space-8);
 }
 
+.site-header::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 999;
+  pointer-events: none;
+}
+
+.site-header.is-menu-open::after {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
 /* --------------------------------------------------------------------------
    Logo
    -------------------------------------------------------------------------- */

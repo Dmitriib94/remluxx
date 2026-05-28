@@ -1,19 +1,20 @@
 import { onReady } from './core/dom.js';
 
-import { initStickyHeader }     from './sections/header.js';
-import { initSmoothScroll }     from './components/smooth-scroll.js';
+import { initStickyHeader } from './sections/header.js';
+import { initSmoothScroll } from './components/smooth-scroll.js';
 import { initRevealAnimations } from './components/reveal.js';
-import { initForms }            from './components/forms.js';
-import { initMobileBottomBar }  from './components/mobile-bottom-bar.js';
-import { initPortfolioModal }   from './components/portfolio-modal.js';
-import { initServicesToggle }   from './sections/services.js';
-import { initFAQ }              from './sections/faq.js';
-import { initWhyUsReveal }      from './sections/why-us.js';
-import { initProcessTimeline }  from './sections/process.js';
-import { initAboutReveal }      from './sections/about.js';
-import { initContactsReveal }   from './sections/contacts.js';
-import { initFooterReveal }     from './sections/footer.js';
-import { initFooterAccordion }  from './sections/footer-accordion.js';
+import { initForms } from './components/forms.js';
+import { initMobileBottomBar } from './components/mobile-bottom-bar.js';
+import { initPortfolioModal } from './components/portfolio-modal.js';
+import { initSliders } from './components/slider.js';
+import { initServicesToggle } from './sections/services.js';
+import { initFAQ } from './sections/faq.js';
+import { initWhyUsReveal } from './sections/why-us.js';
+import { initProcessTimeline } from './sections/process.js';
+import { initAboutReveal } from './sections/about.js';
+import { initContactsReveal } from './sections/contacts.js';
+import { initFooterReveal } from './sections/footer.js';
+import { initFooterAccordion } from './sections/footer-accordion.js';
 
 onReady(() => {
   initStickyHeader();
@@ -22,6 +23,7 @@ onReady(() => {
   initWhyUsReveal();
   initProcessTimeline();
   initFAQ();
+  initSliders();
   initPortfolioModal();
   initForms();
   initMobileBottomBar();
