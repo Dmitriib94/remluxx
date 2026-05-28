@@ -1,3 +1,7 @@
+/* ==========================================================================
+   SITE HEADER
+   ========================================================================== */
+
 .site-header {
   position: sticky;
   top: 0;
@@ -5,6 +9,7 @@
   width: 100%;
   color: var(--color-text-inverse);
   background: rgba(26, 26, 26, 0.78);
+  -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   transition:
@@ -25,6 +30,10 @@
   min-height: 82px;
   gap: var(--space-8);
 }
+
+/* --------------------------------------------------------------------------
+   Logo
+   -------------------------------------------------------------------------- */
 
 .site-header__logo {
   display: inline-flex;
@@ -56,6 +65,10 @@
   color: var(--color-accent-light);
 }
 
+/* --------------------------------------------------------------------------
+   Desktop nav
+   -------------------------------------------------------------------------- */
+
 .site-header__nav {
   display: flex;
   align-items: center;
@@ -71,6 +84,7 @@
   font-weight: 500;
   text-decoration: none;
   letter-spacing: 0.02em;
+  transition: color var(--transition-fast);
 }
 
 .site-header__nav a::after {
@@ -86,14 +100,26 @@
   transition: transform var(--transition-fast);
 }
 
-.site-header__nav a:hover {
+.site-header__nav a:hover,
+.site-header__nav a:focus-visible {
   color: var(--color-text-inverse);
 }
 
-.site-header__nav a:hover::after {
+.site-header__nav a:hover::after,
+.site-header__nav a:focus-visible::after {
   transform: scaleX(1);
   transform-origin: left;
 }
+
+.site-header__nav a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 6px;
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Contacts (desktop)
+   -------------------------------------------------------------------------- */
 
 .site-header__contacts {
   display: flex;
@@ -108,31 +134,61 @@
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
+  transition: color var(--transition-fast);
+}
+
+.site-header__phone:hover,
+.site-header__phone:focus-visible {
+  color: var(--color-accent);
+}
+
+.site-header__phone:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+  border-radius: 2px;
 }
 
 .site-header__telegram {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;
-  padding: 0 18px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
   color: var(--color-text-inverse);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
   text-decoration: none;
+  background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: var(--radius-full);
   transition:
     color var(--transition-fast),
     background var(--transition-fast),
-    border-color var(--transition-fast);
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
 }
 
-.site-header__telegram:hover {
+.site-header__telegram:hover,
+.site-header__telegram:focus-visible {
   color: var(--color-primary);
   background: var(--color-accent);
   border-color: var(--color-accent);
+  transform: translateY(-1px);
 }
+
+.site-header__telegram:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.site-header__telegram-icon {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+/* --------------------------------------------------------------------------
+   Burger
+   -------------------------------------------------------------------------- */
 
 .site-header__burger {
   display: none;
@@ -146,6 +202,20 @@
   border-radius: var(--radius-full);
   background: rgba(255, 255, 255, 0.06);
   cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.site-header__burger:hover,
+.site-header__burger:focus-visible {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.32);
+}
+
+.site-header__burger:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
 }
 
 .site-header__burger span {
@@ -161,17 +231,9 @@
     top var(--transition-fast);
 }
 
-.site-header__burger span:nth-child(1) {
-  top: 15px;
-}
-
-.site-header__burger span:nth-child(2) {
-  top: 22px;
-}
-
-.site-header__burger span:nth-child(3) {
-  top: 29px;
-}
+.site-header__burger span:nth-child(1) { top: 15px; }
+.site-header__burger span:nth-child(2) { top: 22px; }
+.site-header__burger span:nth-child(3) { top: 29px; }
 
 .site-header.is-menu-open .site-header__burger span:nth-child(1) {
   top: 22px;
@@ -187,9 +249,17 @@
   transform: rotate(-45deg);
 }
 
+/* --------------------------------------------------------------------------
+   Mobile menu (скрыто на десктопе)
+   -------------------------------------------------------------------------- */
+
 .site-header__mobile {
   display: none;
 }
+
+/* ==========================================================================
+   ADAPTIVE — TABLET / MOBILE
+   ========================================================================== */
 
 @media (max-width: 1023px) {
   .site-header__container {
@@ -209,12 +279,14 @@
     font-size: 1.75rem;
   }
 
+  /* ----- Mobile menu panel ----- */
   .site-header__mobile {
     position: fixed;
     inset: 0 0 0 auto;
     z-index: var(--z-menu);
     display: block;
     width: min(420px, 88vw);
+    height: 100vh;
     height: 100dvh;
     padding-top: 72px;
     background:
@@ -222,6 +294,7 @@
       var(--color-primary);
     box-shadow: -24px 0 64px rgba(0, 0, 0, 0.28);
     transform: translateX(100%);
+    will-change: transform;
     transition: transform var(--transition-slow);
   }
 
@@ -229,6 +302,7 @@
     transform: translateX(0);
   }
 
+  /* Затемнение фона */
   .site-header__mobile::before {
     content: "";
     position: fixed;
@@ -253,6 +327,7 @@
     overflow-y: auto;
   }
 
+  /* ----- Mobile nav ----- */
   .site-header__mobile-nav {
     display: flex;
     flex-direction: column;
@@ -268,8 +343,20 @@
     line-height: 1.1;
     text-decoration: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: color var(--transition-fast);
   }
 
+  .site-header__mobile-nav a:hover,
+  .site-header__mobile-nav a:focus-visible {
+    color: var(--color-accent);
+  }
+
+  .site-header__mobile-nav a:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+
+  /* ----- Mobile actions ----- */
   .site-header__mobile-actions {
     display: grid;
     gap: var(--space-3);
@@ -287,14 +374,43 @@
     font-size: var(--font-size-sm);
     font-weight: 700;
     text-decoration: none;
+    background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: var(--radius-full);
+    transition:
+      color var(--transition-fast),
+      background var(--transition-fast),
+      border-color var(--transition-fast);
   }
 
-  .site-header__mobile-actions a:last-child {
+  .site-header__mobile-actions a:hover,
+  .site-header__mobile-actions a:focus-visible {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.32);
+  }
+
+  .site-header__mobile-actions a:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  /* Акцентная ссылка в мобильном меню (Telegram) */
+  .site-header__mobile-actions .is-accent {
     color: var(--color-primary);
     background: var(--color-accent);
     border-color: var(--color-accent);
+  }
+
+  .site-header__mobile-actions .is-accent:hover,
+  .site-header__mobile-actions .is-accent:focus-visible {
+    background: var(--color-accent-dark, #A67D2F);
+    border-color: var(--color-accent-dark, #A67D2F);
+    color: var(--color-primary);
+  }
+
+  .site-header__mobile-actions .is-accent:active {
+    background: #8F6B28;
+    border-color: #8F6B28;
   }
 }
 
@@ -317,5 +433,25 @@
 
   .site-header__mobile-nav a {
     font-size: 1.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .site-header__nav a,
+  .site-header__nav a::after,
+  .site-header__phone,
+  .site-header__telegram,
+  .site-header__burger,
+  .site-header__burger span,
+  .site-header__mobile,
+  .site-header__mobile::before,
+  .site-header__mobile-nav a,
+  .site-header__mobile-actions a {
+    transition: none;
+  }
+
+  .site-header__mobile {
+    will-change: auto;
   }
 }

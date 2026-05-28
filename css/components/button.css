@@ -61,20 +61,18 @@
   background-color: #C4963A;
   color: #FFFFFF;
   border-color: #C4963A;
-  box-shadow: 0 2px 8px rgba(196, 150, 58, 0.15);
 }
 
 .btn--primary:hover {
   background-color: #A67D2F;
   border-color: #A67D2F;
-  transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(196, 150, 58, 0.35);
+  color: #FFFFFF;
 }
 
 .btn--primary:active {
   background-color: #8F6B28;
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(196, 150, 58, 0.2);
+  border-color: #8F6B28;
+  transform: translateY(1px);
 }
 
 /* --------------------------------------------------------------------------
@@ -90,28 +88,14 @@
 .btn--secondary:hover {
   background-color: #C4963A;
   color: #FFFFFF;
-  transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(196, 150, 58, 0.25);
+  border-color: #C4963A;
 }
 
 .btn--secondary:active {
   background-color: #A67D2F;
   border-color: #A67D2F;
   color: #FFFFFF;
-  transform: translateY(0);
-  box-shadow: none;
-}
-
-/* Вариант на тёмном фоне */
-.btn--secondary.btn--on-dark {
-  color: rgba(255, 255, 255, 0.85);
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-.btn--secondary.btn--on-dark:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #FFFFFF;
-  border-color: rgba(255, 255, 255, 0.7);
+  transform: translateY(1px);
 }
 
 /* --------------------------------------------------------------------------
@@ -167,20 +151,18 @@
   background-color: #C4963A;
   color: #FFFFFF;
   border-color: #C4963A;
-  box-shadow: 0 4px 16px rgba(196, 150, 58, 0.2);
 }
 
 .btn--cta:hover {
   background-color: #A67D2F;
   border-color: #A67D2F;
-  transform: translateY(-1px);
-  box-shadow: 0 12px 32px rgba(196, 150, 58, 0.4);
+  color: #FFFFFF;
 }
 
 .btn--cta:active {
   background-color: #8F6B28;
-  transform: translateY(0);
-  box-shadow: 0 4px 12px rgba(196, 150, 58, 0.2);
+  border-color: #8F6B28;
+  transform: translateY(1px);
 }
 
 /* Пульсирующее свечение для привлечения внимания */
@@ -330,5 +312,19 @@
   .btn--sm {
     width: auto;
     height: 44px;
+  }
+}
+
+/* Выравниваем высоту вторичной кнопки с CTA внутри Hero */
+.hero__actions .btn--secondary {
+  height: 60px;
+  padding: 18px 40px;
+  font-size: 16px;
+}
+
+@media (max-width: 767px) {
+  .hero__actions .btn--secondary {
+    height: 60px;
+    font-size: 15px;
   }
 }

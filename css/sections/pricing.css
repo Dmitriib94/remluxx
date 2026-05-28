@@ -23,15 +23,18 @@
 
 .pricing__grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-6);
   align-items: stretch;
   margin-top: var(--space-12);
 }
 
+/* Карточка: текст слева, фото справа */
 .pricing-card {
   position: relative;
-  height: 100%;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  overflow: hidden;
   background: var(--color-white);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -60,7 +63,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 1;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -80,7 +83,6 @@
 .pricing-card__body {
   display: flex;
   flex-direction: column;
-  height: 100%;
   padding: 36px 28px 28px;
 }
 
@@ -105,41 +107,29 @@
 }
 
 .pricing-card__text {
-  margin: 0 0 24px;
-  max-width: none;
+  margin: 0 0 20px;
   font-size: 14px;
   line-height: 1.65;
   color: var(--color-secondary);
 }
 
 .pricing-card__price {
-  display: flex;
-  align-items: flex-end;
-  gap: 6px;
-  margin-bottom: 20px;
-}
-
-.pricing-card__price-value {
+  margin: 0 0 20px;
+  padding: 12px 14px;
+  border-left: 3px solid var(--color-accent);
+  background: rgba(196, 150, 58, 0.08);
   font-family: var(--font-body);
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 1;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
   color: var(--color-text);
-}
-
-.pricing-card__price-unit {
-  font-family: var(--font-body);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.2;
-  color: var(--color-secondary);
 }
 
 .pricing-card__features {
   display: grid;
   gap: 12px;
-  margin-top: 0;
-  margin-bottom: 24px;
+  margin: 0 0 24px;
+  padding: 0;
   list-style: none;
 }
 
@@ -163,178 +153,75 @@
   box-shadow: 0 0 0 4px rgba(196, 150, 58, 0.12);
 }
 
-.pricing-card__button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: 54px;
+.pricing-card .btn {
   margin-top: auto;
-  padding: 16px 20px;
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
-  background: var(--color-accent);
-  color: var(--color-white);
-  font-weight: 600;
-  text-align: center;
-  transition:
-    background var(--transition-fast),
-    color var(--transition-fast),
-    border-color var(--transition-fast),
-    transform var(--transition-fast);
 }
 
-.pricing-card__button:hover {
-  background: var(--color-accent-hover);
-  color: var(--color-white);
+/* Медиа справа */
+.pricing-card__media {
+  position: relative;
+  min-height: 100%;
+  background: var(--color-surface, #f4efe6);
+  overflow: hidden;
 }
 
-.pricing-card__button:active {
-  background: var(--color-accent-active);
-  transform: translateY(1px);
+.pricing-card__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-base);
 }
 
-.pricing-lead {
-  display: grid;
-  grid-template-columns: minmax(320px, 1.1fr) minmax(420px, 1fr);
-  gap: var(--space-8);
-  align-items: center;
-  margin-top: var(--space-8);
-  padding: 28px;
-  color: var(--color-text-inverse);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-lg);
-  background:
-    radial-gradient(circle at top right, rgba(196, 150, 58, 0.18), transparent 30%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.01)),
-    var(--color-primary);
-  box-shadow: var(--shadow-lg);
+.pricing-card:hover .pricing-card__media img {
+  transform: scale(1.03);
 }
 
-.pricing-lead__content {
+/* Промис-блок «Никаких скрытых доплат» */
+.pricing-promise {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 20px;
-  min-width: 0;
+  margin-top: var(--space-8);
+  padding: 24px 28px;
+  border: 1px solid rgba(196, 150, 58, 0.28);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(90deg, rgba(196, 150, 58, 0.06), transparent 60%),
+    var(--color-white);
+  box-shadow: var(--shadow-sm);
 }
 
-.pricing-lead__icon {
+.pricing-promise__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 64px;
-  height: 64px;
-  flex: 0 0 64px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #f1d697, #c4963a);
-  color: var(--color-white);
-  box-shadow: var(--shadow-gold);
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  color: var(--color-accent);
 }
 
-.pricing-lead__icon svg {
-  width: 30px;
-  height: 30px;
+.pricing-promise__icon svg {
+  width: 28px;
+  height: 28px;
 }
 
-.pricing-lead__eyebrow {
-  margin: 0 0 6px;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.4;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.pricing-lead__title {
-  margin: 0 0 10px;
-  color: var(--color-white);
+.pricing-promise__title {
+  margin: 0 0 4px;
   font-family: var(--font-display);
-  font-size: 32px;
+  font-size: 22px;
   font-weight: 600;
-  line-height: 1.05;
+  line-height: 1.2;
+  color: var(--color-text);
 }
 
-.pricing-lead__desc {
+.pricing-promise__desc {
   margin: 0;
-  max-width: 560px;
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 14px;
-  line-height: 1.65;
-}
-
-.pricing-lead__form {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
-  gap: 12px;
-  align-items: start;
-}
-
-.pricing-lead__field {
-  position: relative;
-}
-
-.pricing-lead__field input {
-  min-height: 54px;
-  padding: 0 16px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--color-white);
-  transition:
-    border-color var(--transition-fast),
-    background var(--transition-fast),
-    box-shadow var(--transition-fast);
-}
-
-.pricing-lead__field input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.pricing-lead__field input:focus {
-  border-color: rgba(196, 150, 58, 0.85);
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 4px rgba(196, 150, 58, 0.16);
-}
-
-.pricing-lead__field input.is-invalid {
-  border-color: var(--color-error);
-  box-shadow: 0 0 0 4px rgba(192, 90, 58, 0.14);
-}
-
-.pricing-lead__error {
-  display: block;
-  min-height: 18px;
-  margin-top: 6px;
-  font-size: 12px;
-  line-height: 1.4;
-  color: #ffb7a1;
-}
-
-.pricing-lead__button {
-  min-width: 180px;
-  min-height: 54px;
-  padding: 0 22px;
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
-  background: var(--color-accent);
-  color: var(--color-white);
-  font-weight: 600;
-  white-space: nowrap;
-  transition:
-    background var(--transition-fast),
-    transform var(--transition-fast),
-    box-shadow var(--transition-fast);
-}
-
-.pricing-lead__button:hover {
-  background: var(--color-accent-hover);
-  box-shadow: var(--shadow-gold);
-}
-
-.pricing-lead__button:active {
-  background: var(--color-accent-active);
-  transform: translateY(1px);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--color-text-muted);
 }
 
 .pricing [data-reveal] {
@@ -343,24 +230,7 @@
 
 @media (max-width: 1023px) {
   .pricing__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .pricing-card:last-child {
-    grid-column: 1 / -1;
-  }
-
-  .pricing-lead {
     grid-template-columns: 1fr;
-    gap: var(--space-6);
-  }
-
-  .pricing-lead__form {
-    grid-template-columns: 1fr;
-  }
-
-  .pricing-lead__button {
-    width: 100%;
   }
 }
 
@@ -379,49 +249,37 @@
   }
 
   .pricing__grid {
-    grid-template-columns: 1fr;
     gap: var(--space-4);
     margin-top: var(--space-8);
   }
 
-  .pricing-card:last-child {
-    grid-column: auto;
+  /* Складываем карточку: фото сверху, текст снизу */
+  .pricing-card {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-card__media {
+    order: -1;
+    min-height: 200px;
+    aspect-ratio: 16 / 10;
   }
 
   .pricing-card__body {
-    padding: 28px 20px 20px;
+    padding: 24px 20px 20px;
   }
 
   .pricing-card__title {
     font-size: 26px;
   }
 
-  .pricing-card__price-value {
-    font-size: 28px;
-  }
-
-  .pricing-lead {
-    margin-top: var(--space-6);
-    padding: 20px;
-    border-radius: var(--radius-md);
-  }
-
-  .pricing-lead__content {
+  .pricing-promise {
     flex-direction: column;
-    gap: 16px;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px;
   }
 
-  .pricing-lead__icon {
-    width: 56px;
-    height: 56px;
-    flex-basis: 56px;
-  }
-
-  .pricing-lead__title {
-    font-size: 28px;
-  }
-
-  .pricing-lead__desc {
-    font-size: 14px;
+  .pricing-promise__title {
+    font-size: 20px;
   }
 }
