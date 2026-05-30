@@ -378,3 +378,79 @@
     opacity: 1 !important;
   }
 }
+
+/* ==========================================================================
+PROCESS: VIDEO REPORTS
+========================================================================== */
+.process__videos {
+  margin-top: var(--space-10, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.process__videos-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-text);
+}
+
+.process__videos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+/* Вертикальный формат (строго 9:16) */
+.process__video {
+  display: block; /* Убирает inline-отступы и баги браузеров */
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #E8E6E1;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.process__video:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(26, 26, 26, 0.12);
+}
+
+/* Адаптив */
+@media (max-width: 1023px) {
+  .process__videos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .process__videos {
+    margin-top: var(--space-8, 32px);
+    gap: 16px;
+  }
+  .process__videos-title {
+    font-size: 24px;
+  }
+  .process__videos-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .process__video {
+    border-radius: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .process__video {
+    transition: none;
+  }
+  .process__video:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}

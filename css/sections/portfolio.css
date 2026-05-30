@@ -685,3 +685,23 @@
     transition: none !important;
   }
 }
+
+/* ==========================================================================
+   УБИРАЕМ СРАВНЕНИЕ "ДО / ПОСЛЕ"
+   ========================================================================== */
+.portfolio-card__image--before {
+  display: none;
+}
+
+.portfolio-card__image--after {
+  clip-path: none;
+  will-change: auto;
+}
+
+.portfolio-card__label--before {
+  display: none;
+}
+
+.portfolio-card__divider {
+  display: none;
+}
