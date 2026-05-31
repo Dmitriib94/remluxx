@@ -10,7 +10,7 @@ import { initSliders } from './components/slider.js';
 import { initServicesToggle } from './sections/services.js';
 import { initFAQ } from './sections/faq.js';
 import { initWhyUsReveal } from './sections/why-us.js';
-import { initProcessTimeline } from './sections/process.js';
+import { initProcessSection } from './sections/process.js';
 import { initAboutReveal } from './sections/about.js';
 import { initContactsReveal } from './sections/contacts.js';
 import { initFooterReveal } from './sections/footer.js';
@@ -21,7 +21,7 @@ onReady(() => {
   initSmoothScroll();
   initRevealAnimations();
   initWhyUsReveal();
-  initProcessTimeline();
+  initProcessSection();
   initFAQ();
   initSliders();
   initPortfolioModal();

@@ -17,6 +17,7 @@ function initSlider(slider) {
   const nextBtn = $('[data-slider-next]', slider);
   const pagination = $('[data-slider-pagination]', slider);
   const scrollbarThumb = $('[data-slider-scrollbar-thumb]', slider);
+  
 
   if (!viewport || !track || !slides.length) {
     console.warn('[Slider] Не найдены обязательные элементы в', slider);
