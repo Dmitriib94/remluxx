@@ -98,12 +98,11 @@ export function initPortfolioModal() {
 
 function fillModal(card, refs) {
   const { media, tag, title, description } = refs;
-  
+
   const cardTag = $('.portfolio-card__tag', card)?.textContent?.trim() || 'Кейс RemLuxx';
-  // Убираем "· X м²", если оно есть в заголовке, оставляем только ЖК/адрес
   let cardTitle = $('.portfolio-card__title', card)?.textContent?.trim() || 'Фото наших работ';
   cardTitle = cardTitle.replace(/·\s*\d+\s*м²/gi, '').trim();
-  
+
   const cardDescription = card.dataset.description
     || 'Подробное описание кейса будет добавлено после наполнения раздела.';
 
@@ -112,10 +111,12 @@ function fillModal(card, refs) {
   description.textContent = cardDescription;
 
   media.innerHTML = '';
+
   const beforeImg = $('.portfolio-card__image--before img', card);
   const afterImg = $('.portfolio-card__image--after img', card);
   const videoPoster = $('.portfolio-card__video-poster img', card);
 
+  // Видео-кейс
   if (card.classList.contains('portfolio-card--video') && videoPoster) {
     const img = document.createElement('img');
     img.src = videoPoster.currentSrc || videoPoster.src;
@@ -129,49 +130,63 @@ function fillModal(card, refs) {
     return;
   }
 
+  // Режим "До/После" с переключением
   if (beforeImg && afterImg) {
-    // Режим "До/После" с разделителем
-    const beforeWrap = document.createElement('div');
-    beforeWrap.className = 'portfolio-card__image--before';
-    const beforeClone = document.createElement('img');
-    beforeClone.src = beforeImg.currentSrc || beforeImg.src;
-    beforeClone.alt = beforeImg.alt || `${cardTitle} до`;
-    beforeClone.loading = 'eager';
-    beforeClone.decoding = 'async';
-    beforeWrap.appendChild(beforeClone);
+    // Контейнер для изображений
+    const slider = document.createElement('div');
+    slider.className = 'portfolio-modal__slider';
 
-    const afterWrap = document.createElement('div');
-    afterWrap.className = 'portfolio-card__image--after';
-    afterWrap.style.clipPath = 'inset(0 0 0 50%)';
-    const afterClone = document.createElement('img');
-    afterClone.src = afterImg.currentSrc || afterImg.src;
-    afterClone.alt = afterImg.alt || `${cardTitle} после`;
-    afterClone.loading = 'eager';
-    afterClone.decoding = 'async';
-    afterWrap.appendChild(afterClone);
+    const beforePic = document.createElement('img');
+    beforePic.className = 'portfolio-modal__img portfolio-modal__img--before';
+    beforePic.src = beforeImg.currentSrc || beforeImg.src;
+    beforePic.alt = beforeImg.alt || `${cardTitle} до`;
+    beforePic.loading = 'eager';
+    beforePic.decoding = 'async';
 
-    const overlay = document.createElement('div');
-    overlay.className = 'portfolio-card__overlay';
-    const beforeLabel = document.createElement('span');
-    beforeLabel.className = 'portfolio-card__label portfolio-card__label--before';
-    beforeLabel.textContent = 'До';
-    const afterLabel = document.createElement('span');
-    afterLabel.className = 'portfolio-card__label portfolio-card__label--after';
-    afterLabel.textContent = 'После';
-    const divider = document.createElement('div');
-    divider.className = 'portfolio-card__divider';
-    divider.innerHTML = `
-      <span class="portfolio-card__divider-line"></span>
-      <span class="portfolio-card__handle" aria-hidden="true">
-        <svg class="icon icon--stroke" viewBox="0 0 24 24">
-          <path d="M8 7L3 12L8 17"></path>
-          <path d="M16 7L21 12L16 17"></path>
-        </svg>
-      </span>`;
+    const afterPic = document.createElement('img');
+    afterPic.className = 'portfolio-modal__img portfolio-modal__img--after';
+    afterPic.src = afterImg.currentSrc || afterImg.src;
+    afterPic.alt = afterImg.alt || `${cardTitle} после`;
+    afterPic.loading = 'eager';
+    afterPic.decoding = 'async';
 
-    media.append(beforeWrap, afterWrap, overlay, beforeLabel, afterLabel, divider);
+    // По умолчанию показываем "После"
+    beforePic.style.display = 'none';
+    afterPic.style.display = 'block';
+
+    slider.append(beforePic, afterPic);
+
+    // Кнопки-табы
+    const tabs = document.createElement('div');
+    tabs.className = 'portfolio-modal__tabs';
+
+    const beforeTab = document.createElement('button');
+    beforeTab.className = 'portfolio-modal__tab';
+    beforeTab.textContent = 'До ремонта';
+    beforeTab.type = 'button';
+
+    const afterTab = document.createElement('button');
+    afterTab.className = 'portfolio-modal__tab is-active';
+    afterTab.textContent = 'После ремонта';
+    afterTab.type = 'button';
+
+    tabs.append(beforeTab, afterTab);
+
+    // Обработчики переключения
+    const setActive = (active) => {
+      const isBefore = active === 'before';
+      beforePic.style.display = isBefore ? 'block' : 'none';
+      afterPic.style.display = isBefore ? 'none' : 'block';
+      beforeTab.classList.toggle('is-active', isBefore);
+      afterTab.classList.toggle('is-active', !isBefore);
+    };
+
+    beforeTab.addEventListener('click', () => setActive('before'));
+    afterTab.addEventListener('click', () => setActive('after'));
+
+    media.append(slider, tabs);
   } else {
-    // Если только одно фото (обычно "После")
+    // Только одно фото (обычно "После" или "До")
     const sourceImg = afterImg || beforeImg;
     if (sourceImg) {
       const img = document.createElement('img');

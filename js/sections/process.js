@@ -2,10 +2,13 @@
 import { $, prefersReducedMotion } from '../core/dom.js';
 
 const MOBILE_BREAKPOINT = 1023;
-const VIDEO_SLIDER_BREAKPOINT = 767; // ширина, на которой включаем слайдер
+const VIDEO_SLIDER_BREAKPOINT = 767;
+
+let sliderInitialized = false;
+let activeVideoIndex = 0;
 
 // --------------------------------------------------------------
-// 1. Существующая анимация появления секции
+// 1. Анимация появления секции
 // --------------------------------------------------------------
 export function initProcessTimeline() {
   const section = $('#process');
@@ -29,30 +32,34 @@ export function initProcessTimeline() {
 }
 
 // --------------------------------------------------------------
-// 2. Ленивая загрузка одного видео (устанавливает src, если его нет)
+// 2. Ленивая загрузка видео
 // --------------------------------------------------------------
 function lazyLoadVideo(videoElement) {
   if (!videoElement) return;
-  // Если видео уже имеет src (загружено) — не трогаем
   if (videoElement.src && videoElement.src !== '') return;
 
   const source = videoElement.querySelector('source');
   if (source && source.dataset.src) {
-    // Поддержка data-src для более полной ленивой загрузки (опционально)
     source.src = source.dataset.src;
     videoElement.load();
   } else if (source && source.src && !videoElement.src) {
-    // Если source.src уже прописан, но видео ещё не загружено — принудительно вызываем load
     videoElement.load();
   }
 }
 
 // --------------------------------------------------------------
-// 3. Инициализация мобильного слайдера (только на экранах ≤ VIDEO_SLIDER_BREAKPOINT)
+// 3. Удаление слайдера (контролов)
 // --------------------------------------------------------------
-let sliderInitialized = false;
-let activeVideoIndex = 0;
+function destroyVideoSlider() {
+  const controls = document.querySelector('.process-videos__slider-controls');
+  if (controls) controls.remove();
+  sliderInitialized = false;
+  activeVideoIndex = 0;
+}
 
+// --------------------------------------------------------------
+// 4. Инициализация слайдера с точками и стрелками
+// --------------------------------------------------------------
 function initVideoSlider() {
   const grid = document.querySelector('.process-videos__grid');
   if (!grid) return;
@@ -60,93 +67,144 @@ function initVideoSlider() {
   const cards = document.querySelectorAll('.process-video-card');
   if (cards.length === 0) return;
 
-  // Удаляем старую пагинацию, если есть
-  const oldPagination = document.querySelector('.process-videos__pagination');
-  if (oldPagination) oldPagination.remove();
+  // Удаляем старые контролы, если есть
+  destroyVideoSlider();
 
-  // Создаём пагинацию (точки)
+  // Создаём контейнер контролов
+  const controlsWrapper = document.createElement('div');
+  controlsWrapper.className = 'process-videos__slider-controls';
+
+  // --- Пагинация (точки) ---
   const pagination = document.createElement('div');
   pagination.className = 'process-videos__pagination';
   for (let i = 0; i < cards.length; i++) {
     const dot = document.createElement('button');
     dot.className = 'process-videos__dot';
     dot.setAttribute('data-index', i);
-    dot.addEventListener('click', () => {
-      const cardWidth = cards[0].offsetWidth;
-      grid.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
-    });
+    dot.addEventListener('click', () => scrollToCard(i));
     pagination.appendChild(dot);
   }
-  grid.parentNode.insertBefore(pagination, grid.nextSibling);
+  controlsWrapper.appendChild(pagination);
 
-  // Функция обновления активной точки и ленивой загрузки видео
-  function updateActiveDot() {
+  // --- Стрелки навигации ---
+  const navPrev = document.createElement('button');
+  navPrev.className = 'process-videos__nav process-videos__nav--prev';
+  navPrev.setAttribute('aria-label', 'Предыдущее видео');
+  navPrev.innerHTML = `
+    <svg viewBox="0 0 24 24">
+      <path d="M15 6L9 12L15 18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `;
+
+  const navNext = document.createElement('button');
+  navNext.className = 'process-videos__nav process-videos__nav--next';
+  navNext.setAttribute('aria-label', 'Следующее видео');
+  navNext.innerHTML = `
+    <svg viewBox="0 0 24 24">
+      <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `;
+
+  controlsWrapper.appendChild(navPrev);
+  controlsWrapper.appendChild(navNext);
+
+  // Вставляем контролы после grid
+  grid.parentNode.insertBefore(controlsWrapper, grid.nextSibling);
+
+  // Функция прокрутки к карточке по индексу
+  const scrollToCard = (index) => {
+    const cardWidth = cards[0].offsetWidth;
+    const marginRight = parseFloat(getComputedStyle(cards[0]).marginRight) || 0;
+    const step = cardWidth + marginRight;
+    grid.scrollTo({ left: index * step, behavior: 'smooth' });
+  };
+
+  // Получение текущего индекса на основе прокрутки
+  const getCurrentIndex = () => {
     const scrollLeft = grid.scrollLeft;
     const cardWidth = cards[0].offsetWidth;
-    let newIndex = Math.round(scrollLeft / cardWidth);
-    newIndex = Math.min(Math.max(0, newIndex), cards.length - 1);
+    const marginRight = parseFloat(getComputedStyle(cards[0]).marginRight) || 0;
+    const step = cardWidth + marginRight;
+    let index = Math.round(scrollLeft / step);
+    index = Math.min(Math.max(0, index), cards.length - 1);
+    return index;
+  };
 
+  // Обработчики стрелок
+  navPrev.addEventListener('click', () => {
+    const currentIndex = getCurrentIndex();
+    if (currentIndex > 0) scrollToCard(currentIndex - 1);
+  });
+
+  navNext.addEventListener('click', () => {
+    const currentIndex = getCurrentIndex();
+    if (currentIndex < cards.length - 1) scrollToCard(currentIndex + 1);
+  });
+
+  // Обновление активной точки и ленивая загрузка видео
+  const updateActiveDotAndLazy = () => {
+    const currentIndex = getCurrentIndex();
     const dots = document.querySelectorAll('.process-videos__dot');
     dots.forEach((dot, idx) => {
-      dot.classList.toggle('active', idx === newIndex);
+      dot.classList.toggle('active', idx === currentIndex);
     });
 
-    // Ленивая загрузка: подгружаем видео только для активного слайда
-    if (newIndex !== activeVideoIndex) {
-      activeVideoIndex = newIndex;
+    if (currentIndex !== activeVideoIndex) {
+      activeVideoIndex = currentIndex;
       const activeCard = cards[activeVideoIndex];
       const video = activeCard?.querySelector('video');
       if (video) lazyLoadVideo(video);
     }
-  }
-
-  // Первоначальная загрузка первого видео
-  const firstVideo = cards[0]?.querySelector('video');
-  if (firstVideo) lazyLoadVideo(firstVideo);
-  activeVideoIndex = 0;
+  };
 
   grid.addEventListener('scroll', () => {
-    requestAnimationFrame(updateActiveDot);
+    requestAnimationFrame(updateActiveDotAndLazy);
   });
 
-  // Пересчёт при ресайзе (чтобы корректно работала активная точка)
+  // При ресайзе корректируем активную точку и позицию
   let resizeTimer;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
-      updateActiveDot();
+      updateActiveDotAndLazy();
+      const currentIndex = getCurrentIndex();
+      scrollToCard(currentIndex);
     }, 150);
   });
 
-  updateActiveDot();
+  // Инициализация первого видео и активной точки
+  const firstVideo = cards[0]?.querySelector('video');
+  if (firstVideo) lazyLoadVideo(firstVideo);
+  activeVideoIndex = 0;
+  updateActiveDotAndLazy();
+
   sliderInitialized = true;
 }
 
 // --------------------------------------------------------------
-// 4. Включение/выключение слайдера в зависимости от ширины экрана
+// 5. Переключение между слайдером и сеткой
 // --------------------------------------------------------------
 function toggleVideoSlider() {
   const isMobile = window.innerWidth <= VIDEO_SLIDER_BREAKPOINT;
   const grid = document.querySelector('.process-videos__grid');
-  const pagination = document.querySelector('.process-videos__pagination');
+
+  if (!grid) return;
 
   if (isMobile) {
-    if (!sliderInitialized && grid) {
+    if (!sliderInitialized) {
+      grid.style.display = 'flex';
       initVideoSlider();
     }
   } else {
-    // Удаляем пагинацию и сбрасываем флаг, чтобы при следующем сужении экрана слайдер создался заново
-    if (pagination) pagination.remove();
-    sliderInitialized = false;
-    activeVideoIndex = 0;
-
-    // На десктопе можно дополнительно загрузить все видео (по желанию)
-    // но оставим их ленивую загрузку через Intersection Observer (см. ниже)
+    if (sliderInitialized) {
+      destroyVideoSlider();
+      grid.style.display = '';
+    }
   }
 }
 
 // --------------------------------------------------------------
-// 5. Ленивая загрузка видео на десктопе (через Intersection Observer)
+// 6. Ленивая загрузка видео на десктопе (через Intersection Observer)
 // --------------------------------------------------------------
 function initDesktopVideoLazyLoad() {
   const videos = document.querySelectorAll('.process-video-card video');
@@ -157,27 +215,23 @@ function initDesktopVideoLazyLoad() {
       if (entry.isIntersecting) {
         const video = entry.target;
         lazyLoadVideo(video);
-        observer.unobserve(video); // загружаем один раз
+        observer.unobserve(video);
       }
     });
-  }, { threshold: 0.3, rootMargin: '100px' }); // начинаем загрузку за 100px до появления
+  }, { threshold: 0.3, rootMargin: '100px' });
 
   videos.forEach(video => observer.observe(video));
 }
 
 // --------------------------------------------------------------
-// 6. Главная функция инициализации всего функционала секции
+// 7. Главная функция инициализации (экспортируемая)
 // --------------------------------------------------------------
 export function initProcessSection() {
-  initProcessTimeline();   // анимация появления
-  toggleVideoSlider();     // мобильный слайдер (проверяет ширину)
-  initDesktopVideoLazyLoad(); // ленивая загрузка видео на десктопе
+  initProcessTimeline();
+  toggleVideoSlider();
+  initDesktopVideoLazyLoad();
 
-  // Подписываемся на ресайз, чтобы переключать режимы
   window.addEventListener('resize', () => {
     toggleVideoSlider();
   });
 }
-
-// Для обратной совместимости, если где-то в main.js вызывается initProcessTimeline,
-// оставляем её, но рекомендуем использовать initProcessSection

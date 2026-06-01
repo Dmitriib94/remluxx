@@ -7,7 +7,7 @@ import { initForms } from './components/forms.js';
 import { initMobileBottomBar } from './components/mobile-bottom-bar.js';
 import { initPortfolioModal } from './components/portfolio-modal.js';
 import { initSliders } from './components/slider.js';
-import { initServicesToggle } from './sections/services.js';
+import { initServicesSection } from './sections/services.js';
 import { initFAQ } from './sections/faq.js';
 import { initWhyUsReveal } from './sections/why-us.js';
 import { initProcessSection } from './sections/process.js';
@@ -27,7 +27,7 @@ onReady(() => {
   initPortfolioModal();
   initForms();
   initMobileBottomBar();
-  initServicesToggle();
+  initServicesSection();
   initAboutReveal();
   initContactsReveal();
   initFooterReveal();
