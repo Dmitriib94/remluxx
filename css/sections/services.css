@@ -6,6 +6,7 @@
   margin-bottom: 48px;
 }
 
+/* Базовая сетка — 2 колонки на десктопе */
 .services__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -182,7 +183,104 @@
   min-width: 320px;
 }
 
-@media (max-width: 1023px) {
+/* ==================== Слайдер на мобильных ==================== */
+@media (max-width: 767px) {
+  .services__slider-container {
+    position: relative;
+  }
+
+  .services__grid {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-bottom: 20px;
+  }
+
+  .services__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .services-card {
+    flex: 0 0 calc(100% - 32px);
+    scroll-snap-align: start;
+    margin-right: 16px;
+    margin-left: 16px;
+  }
+
+  .services-card:first-child {
+    margin-left: 16px;
+  }
+
+  .services-card:last-child {
+    margin-right: 16px;
+  }
+
+  /* Контейнер для контролов (пагинация + стрелки) */
+  .services__slider-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin: 16px 0 24px;
+  }
+
+  /* Пагинация (точки) */
+  .services__pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .services__dot {
+    width: 8px;
+    height: 8px;
+    background: rgba(26, 26, 26, 0.2);
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .services__dot.active {
+    background: var(--color-accent, #c4963a);
+    width: 28px;
+    border-radius: 8px;
+  }
+
+  /* Стрелки навигации */
+  .services__nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #ffffff;
+    border: 1px solid rgba(26, 26, 26, 0.1);
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #1a1a1a;
+  }
+
+  .services__nav:hover {
+    background: var(--color-accent, #c4963a);
+    border-color: var(--color-accent, #c4963a);
+    color: #ffffff;
+  }
+
+  .services__nav svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+  }
+}
+
+@media (max-width: 1023px) and (min-width: 768px) {
   .services__grid {
     gap: 24px;
   }
@@ -195,12 +293,6 @@
 @media (max-width: 767px) {
   .services__head {
     margin-bottom: 32px;
-  }
-
-  .services__grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    margin-bottom: 24px;
   }
 
   .services-card__media {
@@ -235,7 +327,8 @@
   .services-card__link,
   .services-card__link span,
   .services-toggle__option,
-  .services-toggle__thumb {
+  .services-toggle__thumb,
+  .services__nav {
     transition: none;
   }
 

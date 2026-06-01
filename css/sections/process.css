@@ -549,3 +549,157 @@
     border-radius: 8px;
   }
 }
+
+/* ========== НОВЫЕ СТИЛИ ДЛЯ КОНТРОЛОВ СЛАЙДЕРА ========== */
+
+/* Контейнер для пагинации и стрелок */
+.process-videos__slider-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* Пагинация (точки) – уже есть, но добавим обёртку */
+.process-videos__pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.process-videos__dot {
+  width: 8px;
+  height: 8px;
+  background: rgba(26, 26, 26, 0.2);
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.process-videos__dot.active {
+  background: var(--color-accent, #c4963a);
+  width: 28px;
+  border-radius: 8px;
+}
+
+/* Стрелки навигации */
+.process-videos__nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #ffffff;
+  border: 1px solid rgba(26, 26, 26, 0.1);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #1a1a1a;
+}
+
+.process-videos__nav:hover {
+  background: var(--color-accent, #c4963a);
+  border-color: var(--color-accent, #c4963a);
+  color: #ffffff;
+}
+
+.process-videos__nav svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+
+/* Адаптив: на мобильных ширина контролов */
+@media (max-width: 767px) {
+  .process-videos__slider-controls {
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .process-videos__nav {
+    width: 36px;
+    height: 36px;
+  }
+
+  .process-videos__nav svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Улучшенные карточки преимуществ (бережём время, гарантия) */
+.process__benefits {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 48px;
+  list-style: none;
+}
+
+.process__benefits li {
+  flex: 1;
+  max-width: 480px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 24px 28px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #ffffff 0%, #fef9f0 100%);
+  border: 1px solid rgba(196, 150, 58, 0.3);
+  box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(196, 150, 58, 0.05) inset;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--color-text);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.process__benefits li:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 32px -16px rgba(0, 0, 0, 0.18);
+  border-color: var(--color-accent);
+}
+
+.process__benefit-icon {
+  flex: 0 0 auto;
+  font-size: 32px;
+  background: rgba(196, 150, 58, 0.12);
+  width: 56px;
+  height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 60px;
+  transition: background 0.2s;
+}
+
+.process__benefits li:hover .process__benefit-icon {
+  background: rgba(196, 150, 58, 0.25);
+}
+
+.process__benefits li span:last-child {
+  font-weight: 500;
+  color: #1a1a1a;
+  flex: 1;
+}
+
+/* Адаптация под мобильные */
+@media (max-width: 767px) {
+  .process__benefits {
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .process__benefits li {
+    padding: 20px;
+  }
+
+  .process__benefit-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 28px;
+  }
+}
