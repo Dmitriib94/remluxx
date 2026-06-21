@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /favicons/example.html
+Disallow: /img/portfolio/
+Disallow: /img/design/
+
+Sitemap: https://remluxx.ru/sitemap.xml
+Host: https://remluxx.ru
